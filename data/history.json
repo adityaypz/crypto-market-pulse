@@ -1,0 +1,27 @@
+{
+  "snapshots": [
+    {
+      "date": "2026-02-13",
+      "marketState": "neutral",
+      "btcChange": -1.25782,
+      "altMedian": -0.28785,
+      "breadth": 32,
+      "volatilityValue": 0.85801,
+      "themes": {
+        "AI": 19,
+        "Funding": 12,
+        "Regulation": 5,
+        "Adoption": 2,
+        "Security": 1
+      },
+      "assets": {
+        "BTC": 17,
+        "ETH": 6,
+        "SOL": 2,
+        "NEAR": 2,
+        "AAVE": 2
+      },
+      "headlineCount": 57
+    }
+  ]
+}
