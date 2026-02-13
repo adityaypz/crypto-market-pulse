@@ -1,58 +1,44 @@
-# Crypto Market Pulse Dashboard
+# Crypto Market Pulse 📊
 
-A Next.js dashboard that provides real-time crypto market insights without requiring API keys. Data is collected via web scraping from public sources.
+A lightweight, real-time crypto market intelligence dashboard built with Next.js. Provides instant market insights without requiring API keys—all data sourced from public APIs.
 
-## Features
+![Next.js](https://img.shields.io/badge/Next.js-15-black) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8)
 
-- **Market State Detection**: Analyzes market regime (risk on/neutral/risk off) using 7d market changes and BTC dominance
-- **Volatility Mood**: Calculates median absolute 24h price changes and categorizes as low/normal/elevated
-- **Narrative Pulse**: Scrapes crypto news headlines and identifies trending themes using keyword mapping
-- **Daily Brief**: Generates a concise market summary with conditional notes based on market conditions
-- **Smart Caching**: 30-minute TTL cache to minimize scraping requests
-- **Refresh on Demand**: Bypass cache and fetch fresh data with a single click
+## ✨ Features
 
-## Tech Stack
+- **Market Regime Detection** - Analyzes market state (Risk On/Neutral/Risk Off) using BTC performance, altcoin breadth, and median changes
+- **Volatility Tracking** - Real-time volatility measurement with visual indicators
+- **Narrative Pulse** - Identifies trending themes from crypto news headlines
+- **Asset Mentions** - Tracks which cryptocurrencies are dominating the conversation
+- **Daily Brief** - AI-generated market summary with key insights
+- **7-Day Regime History** - Visual timeline of market state changes
+- **Smart Caching** - 5-minute cache to optimize performance
+- **Premium UI** - Editorial-inspired design with subtle micro-interactions
 
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Scraping**: Playwright (for JavaScript-rendered content) + Cheerio
-- **Data Sources**: CoinGecko (market data), CryptoPanic (news headlines)
-
-## Setup Instructions
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ installed
-- npm or yarn package manager
+- Node.js 18+ 
+- npm or yarn
 
 ### Installation
 
-1. Navigate to the project directory:
 ```bash
-cd "c:\Users\aadit\Downloads\crypto market pulse"
-```
+# Clone the repository
+git clone https://github.com/adityaypz/crypto-market-pulse.git
 
-2. Install dependencies (already done):
-```bash
+# Navigate to project directory
+cd crypto-market-pulse
+
+# Install dependencies
 npm install
-```
 
-3. Install Playwright browsers (already done):
-```bash
-npx playwright install chromium
-```
-
-### Running Locally
-
-Start the development server:
-```bash
+# Run development server
 npm run dev
 ```
 
-The dashboard will be available at:
-- **Local**: http://localhost:3000
-- **Network**: http://192.168.1.10:3000
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Building for Production
 
@@ -61,95 +47,163 @@ npm run build
 npm start
 ```
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 crypto-market-pulse/
 ├── app/
-│   ├── api/data/route.ts       # API endpoint for dashboard data
-│   ├── page.tsx                # Main dashboard page
-│   ├── layout.tsx              # Root layout
-│   └── globals.css             # Global styles
+│   ├── api/
+│   │   ├── data/route.ts          # Main data aggregation endpoint
+│   │   └── history/route.ts       # 7-day regime history
+│   ├── about/page.tsx             # About page
+│   ├── disclaimer/page.tsx        # Legal disclaimer
+│   ├── sources/page.tsx           # Data sources info
+│   ├── page.tsx                   # Main dashboard
+│   ├── layout.tsx                 # Root layout
+│   └── globals.css                # Global styles
+├── components/
+│   ├── MarketStateCard.tsx        # Market regime display
+│   ├── VolatilityCard.tsx         # Volatility indicator
+│   ├── ThemesCard.tsx             # Trending themes
+│   ├── AssetsCard.tsx             # Asset mentions
+│   ├── DailyBrief.tsx             # Market summary
+│   ├── RegimeStrip.tsx            # 7-day history
+│   ├── WatchlistSnapshot.tsx      # Watchlist tickers
+│   └── AlertBadges.tsx            # Alert indicators
 ├── lib/
 │   ├── sources/
-│   │   ├── market.ts           # Market data scraper (CoinGecko)
-│   │   └── news.ts             # News scraper (CryptoPanic)
+│   │   ├── market.ts              # CoinGecko data fetcher
+│   │   └── rss.ts                 # RSS news aggregator
 │   ├── logic/
-│   │   ├── narratives.ts       # Theme detection and analysis
-│   │   ├── regime.ts           # Market state detection
-│   │   └── volatility.ts       # Volatility calculation
+│   │   ├── regime.ts              # Market state analysis
+│   │   ├── volatility.ts          # Volatility calculation
+│   │   ├── themes.ts              # Theme detection
+│   │   ├── assets.ts              # Asset mention tracking
+│   │   └── deltas.ts              # Change tracking
 │   └── storage/
-│       └── cache.ts            # Cache management
-├── components/
-│   ├── MarketStateCard.tsx     # Market regime display
-│   ├── VolatilityCard.tsx      # Volatility mood display
-│   ├── NarrativePulseCard.tsx  # Top themes display
-│   └── DailyBrief.tsx          # Market summary
+│       ├── cache.ts               # Cache management
+│       └── history.ts             # Historical data
 └── data/
-    └── cache.json              # Auto-generated cache file
+    ├── cache.json                 # Auto-generated cache
+    └── history.json               # 7-day regime history
 ```
 
-## How It Works
+## 🔧 How It Works
 
-### Data Collection
+### Data Sources
 
-1. **Market Data**: Playwright scrapes CoinGecko's homepage to extract:
-   - Top 50 coins with 24h % changes
-   - BTC dominance and 7d changes
-   - Total market cap 7d change
+- **Market Data**: [CoinGecko Public API](https://www.coingecko.com/api/documentation)
+  - Top 100 cryptocurrencies by market cap
+  - Real-time price data and 24h changes
+  
+- **News Headlines**: RSS feeds from:
+  - [CoinDesk](https://www.coindesk.com)
+  - [Decrypt](https://decrypt.co)
+  - [The Block](https://www.theblock.co)
 
-2. **News Headlines**: Playwright scrapes CryptoPanic to extract:
-   - Recent headlines from the last 24 hours
-   - Source and timestamp information
+### Analysis Pipeline
 
-### Analysis
+1. **Market Regime**
+   - Analyzes BTC performance vs altcoin median
+   - Calculates market breadth (% of coins green)
+   - Determines Risk On/Neutral/Risk Off state
 
-1. **Market Regime**: 
-   - Preferred: Uses 7d market change + BTC dominance change
-   - Fallback: Compares BTC 24h % vs median alt 24h %
-   - Returns: "risk on", "neutral", or "risk off" with explanation
+2. **Volatility**
+   - Median absolute 24h change across top 100
+   - Categorized as: Low (<2%), Normal (2-4%), Elevated (>4%)
 
-2. **Volatility Mood**:
-   - Calculates median absolute 24h % change
-   - Labels: low (<2%), normal (2-4%), elevated (>4%)
+3. **Themes & Assets**
+   - Keyword-based analysis of headlines
+   - Deduplication using fuzzy matching (70% threshold)
+   - Tracks mentions of major narratives and cryptocurrencies
 
-3. **Narrative Pulse**:
-   - Maps headlines to themes using keyword dictionary
-   - Counts frequency in last 24h
-   - Returns top 5 themes
+4. **Daily Brief**
+   - Auto-generated summary based on market conditions
+   - Two modes: Crypto Twitter style or Analyst style
 
-### Caching
+### Caching Strategy
 
-- Cache stored in `/data/cache.json`
-- TTL: 30 minutes
-- Automatic cache invalidation on expiry
-- Manual refresh bypasses cache
+- **TTL**: 5 minutes
+- **Storage**: Local JSON file (`/data/cache.json`)
+- **Invalidation**: Automatic on expiry or manual refresh
+- **Fallback**: Graceful degradation if data fetch fails
 
-## Usage
+## 🎨 Design Philosophy
 
-1. **Initial Load**: Dashboard fetches and caches data automatically
-2. **Cached Loads**: Subsequent visits within 30 minutes use cached data
-3. **Manual Refresh**: Click "Refresh" button to bypass cache and fetch fresh data
-4. **Error Handling**: Dashboard displays partial data if scraping fails
+- **Editorial First** - Clean typography, generous whitespace, minimal borders
+- **Premium Polish** - Subtle hover states, micro-animations, smooth transitions
+- **Accessibility** - Keyboard navigation, focus states, semantic HTML
+- **Mobile Optimized** - Responsive design, touch-friendly interactions
+- **Performance** - GPU-accelerated animations, optimized bundle size
 
-## Notes
+## 📊 API Endpoints
 
-- **Rate Limiting**: Be mindful of scraping frequency to avoid being blocked
-- **Data Accuracy**: Scraped data depends on source website structure
-- **Maintenance**: May require updates if source websites change their HTML structure
-- **Production Deployment**: For production, consider using a database-backed cache instead of local JSON file
+### GET `/api/data`
 
-## Troubleshooting
+Returns current market snapshot:
 
-### Scraping Fails
-- Check if source websites (CoinGecko, CryptoPanic) are accessible
-- Verify Playwright browsers are installed: `npx playwright install chromium`
-- Check console logs for detailed error messages
+```typescript
+{
+  marketState: "risk on" | "neutral" | "risk off",
+  marketWhy: string,
+  btcChange: number,
+  altMedian: number,
+  breadth: number,
+  volatilityValue: number,
+  volatilityLabel: "low" | "normal" | "elevated",
+  themesTop: Array<{ theme: string, count: number, delta: number }>,
+  assetsTop: Array<{ asset: string, count: number, delta: number }>,
+  headlinesSample: Array<{ title: string, source: string, time: string }>,
+  watchlist: Array<{ symbol: string, price: number, change24h: number }>,
+  updatedAt: string,
+  isStale: boolean
+}
+```
 
-### Cache Issues
-- Delete `/data/cache.json` to clear cache manually
-- Ensure write permissions for `/data` directory
+### GET `/api/history`
 
-### Build Errors
-- Run `npm install` to ensure all dependencies are installed
-- Check TypeScript errors: `npm run lint`
+Returns 7-day regime history for timeline visualization.
+
+## 🚢 Deployment
+
+### Vercel (Recommended)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/adityaypz/crypto-market-pulse)
+
+1. Push to GitHub
+2. Import repository in Vercel
+3. Deploy (auto-detects Next.js)
+
+No environment variables required—all data from public sources.
+
+### Other Platforms
+
+Works on any platform supporting Next.js:
+- Netlify
+- Railway
+- Render
+- Self-hosted with Docker
+
+## 📝 License
+
+MIT License - feel free to use for personal or commercial projects.
+
+## ⚠️ Disclaimer
+
+This dashboard is for **informational purposes only**. It does not constitute financial advice, investment advice, or trading advice. Cryptocurrency markets are highly volatile and speculative. Always do your own research and consult with qualified financial advisors before making investment decisions.
+
+## 🤝 Contributing
+
+Contributions welcome! Feel free to:
+- Report bugs
+- Suggest features
+- Submit pull requests
+- Improve documentation
+
+## 📧 Contact
+
+Created by [@adityaypz](https://github.com/adityaypz)
+
+---
+
+**Built with ❤️ using Next.js, TypeScript, and Tailwind CSS**
