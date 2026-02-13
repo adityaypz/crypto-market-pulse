@@ -22,6 +22,21 @@ export default function AboutPage() {
                     <p className="text-sm text-zinc-500 mt-8 pt-6 border-t border-zinc-900">
                         This tool is informational only and does not constitute financial advice. Always do your own research.
                     </p>
+
+                    <div className="mt-8 pt-6 border-t border-zinc-900">
+                        <h2 className="text-lg font-medium text-zinc-300 mb-3">Creator</h2>
+                        <p className="text-sm text-zinc-400">
+                            Built by{' '}
+                            <a
+                                href="https://twitter.com/vncturn"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="accent-text hover:opacity-80 transition-opacity"
+                            >
+                                @vncturn
+                            </a>
+                        </p>
+                    </div>
                 </div>
 
                 <div className="mt-12">
@@ -49,6 +64,10 @@ export default function AboutPage() {
                             <span>·</span>
                             <a href="/disclaimer" className="hover:text-zinc-300 transition-colors">
                                 disclaimer
+                            </a>
+                            <span>·</span>
+                            <a href="https://twitter.com/vncturn" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">
+                                @vncturn
                             </a>
                         </div>
                     </div>

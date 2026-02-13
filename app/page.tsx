@@ -255,6 +255,10 @@ export default function Home() {
                             <a href="/disclaimer" className="hover:text-zinc-300 transition-colors">
                                 disclaimer
                             </a>
+                            <span>·</span>
+                            <a href="https://twitter.com/vncturn" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">
+                                @vncturn
+                            </a>
                         </div>
                     </div>
                 </footer>
